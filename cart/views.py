@@ -17,9 +17,15 @@ def cart_add(request):
         #save it in the session
         cart.add(product=product)
 
+        # Get cart quanity
+        cart_quantity = cart.__len__()
+        response =JsonResponse({'qty': cart_quantity})
+
         #return response
-        response =JsonResponse({'Product Name': product.name})
+        
+        # response =JsonResponse({'Product Name': product.name})
         return response
+        
 
 def cart_delete(request):
     pass
