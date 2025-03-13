@@ -27,11 +27,14 @@
                                   ${{ product.price }}
                               {% else %}
                                   ${{ product.price }}
+                                  <br></br>id: {{ product.id }}
                               {% endif %} <br>&nbsp;</br>
                               
 
                                   <a href="{% url 'home' %}" class='btn btn-secondary'>Home</a>
+                                  <button type="button" value={{ product.id }} class="btn btn-secondary" id="add-cart">Add to cart</button>
                                     </center>
+
                                 </div>
                               </div>
                             </div>
@@ -42,4 +45,35 @@
             </div>
         </div>
         <br></br>     <br></br>     <br></br>     <br></br>        <br></br>  <br></br>
+
+<script>
+  // check if btn pressed
+  $(document).on('click', '#add-cart', function(e){
+    e.preventDefault();
+    console.log("jQuery is working!");
+    $.ajax({
+      type:'POST',
+      url:'{% url "cart_add" %}',
+      data:{
+        product_id:$('#add-cart').val(),
+        csrfmiddlewaretoken:'{{ csrf_token }}',
+        action:'post'
+
+      },
+      success: function(json){
+        console.log(json)
+      },
+      error: function(shr, errmsg, err){
+
+      }
+    });
+
+
+    
+  })
+
+
+
+</script>
+
 {%endblock%}
